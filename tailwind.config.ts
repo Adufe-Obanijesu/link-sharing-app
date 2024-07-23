@@ -20,7 +20,7 @@ const config: Config = {
           20: "#FAFAFA",
         },
         dark: "#333333",
-        ascent: "#FF3939",
+        danger: "#FF3939",
       },
       fontFamily: {
         instr_sans: ["Instrument Sans", "sans-serif"],
