@@ -20,7 +20,7 @@ body {
 }
 
 button {
-  @apply transition-item cursor-pointer;
+  @apply transition-item cursor-pointer rounded-lg;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,11 +28,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h3 {
-  @apply text-3xl font-bold
+  @apply md:text-[32px] text-2xl font-bold
 }
 
 p {
-  @apply text-grey;
+  @apply text-grey-75;
 }
 
 .h-center {

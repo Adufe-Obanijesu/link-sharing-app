@@ -10,10 +10,11 @@ import { useState } from "react";
 // Icons
 import { PiLockKeyFill, PiEnvelopeSimpleFill } from "react-icons/pi";
 
-export default function Login() {
+export default function Signup() {
   const [loginData, setLoginData] = useState<FormData>({
     email: "",
     password: "",
+    confirm_password: "",
   });
 
   return (
@@ -25,9 +26,9 @@ export default function Login() {
 
         <div className="md:bg-white rounded-xl md:p-10 p-8 md:mt-12 mt-16 space-y-10 md:w-[476px]">
           <div className="space-y-2">
-            <h3>Login</h3>
+            <h3>Create account</h3>
             <p className="text-lg">
-              Add your details below to get back into the app
+            Let&apos;s get you started sharing your links!
             </p>
           </div>
 
@@ -45,22 +46,32 @@ export default function Login() {
               <Input
                 type="password"
                 name="password"
-                label="Password"
-                placeholder="Enter your password"
+                label="Create password"
+                placeholder="At least 8 characters"
                 icon={<PiLockKeyFill />}
                 value={loginData}
                 setValue={setLoginData}
-                error={{
-                    status: true,
-                    message: "Cannot be empty",
-                }}
               />
-              <Button text="Login" />
+              <Input
+                type="password"
+                name="confirm_password"
+                label="Confirm password"
+                placeholder="At least 8 characters"
+                icon={<PiLockKeyFill />}
+                value={loginData}
+                setValue={setLoginData}
+              />
+
+              <p className="text-sm">
+                Password must contain at leat 8 characters
+              </p>
+
+              <Button text="Create new account" />
             </form>
 
             <div className="text-center md:flex gap-2 justify-center">
-              <p className="text-grey">Don&apos;t have an account?</p>
-              <Link href="/signup" className="text-primary">Create account</Link>
+              <p className="text-grey">Already have an account?</p>
+              <Link href="/login" className="text-primary">Login</Link>
             </div>
           </div>
         </div>

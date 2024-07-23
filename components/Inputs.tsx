@@ -8,14 +8,14 @@ export function Input({
   name,
   value,
   setValue,
-  error = false,
+  error,
   type = "text",
 }: InputType) {
   return (
     <div className="relative">
       <label
-        htmlFor="inputField"
-        className={`block text-sm mb-1 ${error ? "text-danger" : "text-dark"}`}
+        htmlFor={name}
+        className={`block text-sm mb-1 ${error?.status ? "text-danger" : "text-dark"}`}
       >
         {label}
       </label>
@@ -25,22 +25,22 @@ export function Input({
         </div>
         <input
           type={type}
-          id="inputField"
-          className={`block w-full pl-10 pr-3 py-3 ${
-            error ? "border-danger" : "border-gray-300"
-          } border-[1.5px] rounded-md leading-5 bg-transparent placeholder-gray-500 focus:outline-none focus:border-2 focus:border-primary-50 focus:shadow-lg focus:shadow-primary/15`}
+          id={name}
+          className={`block w-full pl-10 pr-4 py-3 ${
+            error ? "border-danger" : "border-grey-50"
+          } border group rounded-md leading-5 bg-transparent placeholder-grey focus:outline-none focus:border-primary focus:shadow-input`}
           placeholder={placeholder}
           name={name}
           value={value[name]}
           onChange={(e) => handleForm(e, value, setValue)}
         />
 
-        {error && (
-          <div className="v-center absolute top-0 right-1 h-full">
+        {error?.status && (
+          <label htmlFor={name} className="v-center absolute top-0 right-1 h-full">
             <span className="text-danger z-10 bg-white pr-3">
-              Can&apos;t be empty
+              {error?.message}
             </span>
-          </div>
+          </label>
         )}
       </div>
     </div>

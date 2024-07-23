@@ -8,10 +8,13 @@ interface InputType {
   value: Record<string, string>;
   setValue: Dispatch<React.SetStateAction<Record<string, string>>>;
   type?: string;
-  error?: boolean;
+  error?: {
+    status: boolean;
+    message: string;
+  };
 }
 
-type LoginData = Record<string, string>;
+type FormData = Record<string, string>;
 
 type InputEvent =
   | ChangeEvent<HTMLInputElement>
@@ -23,4 +26,4 @@ type HandleFormType = (
   setData: Dispatch<React.SetStateAction<Record<string, string>>>
 ) => void;
 
-export type { InputType, LoginData, InputEvent, HandleFormType };
+export type { InputType, FormData, InputEvent, HandleFormType };
