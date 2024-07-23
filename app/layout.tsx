@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import PhoneMockup from "@/components/PhoneMockup";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,9 +18,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className="pb-8">
         <Navbar />
-        {children}
+        <main className="md:px-6 px-4">
+          <div className="grid lg:grid-cols-5 gap-4">
+            <div className="lg:col-span-2 hidden lg:flex justify-center bg-white p-10 rounded-lg">
+              <PhoneMockup />
+            </div>
+
+            <div className="lg:col-span-3 md:py-10 rounded-lg bg-white space-y-8">
+              {children}
+            </div>
+          </div>
+        </main>
       </body>
     </html>
   );

@@ -23,6 +23,10 @@ button {
   @apply transition-item cursor-pointer rounded-lg;
 }
 
+.secondary_btn {
+  @apply border border-primary rounded-lg text-primary hover:bg-primary-20;
+}
+
 h1, h2, h3, h4, h5, h6 {
   @apply text-dark;
 }

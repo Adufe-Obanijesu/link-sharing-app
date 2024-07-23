@@ -1,12 +1,14 @@
 "use client"
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import Logo from "./Logo";
 
 // icons
 import { BiLink } from "react-icons/bi";
 import { FaRegUserCircle } from "react-icons/fa";
-import { usePathname } from "next/navigation";
+import { AiOutlineEye } from "react-icons/ai";
 
 const tabs = [
     {
@@ -26,7 +28,7 @@ export default function Navbar() {
     const pathname = usePathname();
 
     return (
-        <nav className="rounded-xl bg-white m-6 py-4 px-6">
+        <nav className="rounded-xl bg-white md:m-6 mb-4 py-4 px-6">
             <div className="flex justify-between items-center">
                 <Logo />
 
@@ -41,9 +43,9 @@ export default function Navbar() {
 
                             return (
                                 <Link key={name} href={link}>
-                                    <div className={`transition-item v-center rounded-lg gap-2 px-[27px] py-[11px] ${isActive ? "bg-primary-20 text-primary" : "bg-transparent text-grey hover:text-primary"}`}>
+                                    <div className={`transition-item v-center rounded-lg gap-2 md:px-[27px] md:py-[11px] px-6 py-3 ${isActive ? "bg-primary-20 text-primary" : "bg-transparent text-grey hover:text-primary"}`}>
                                         {icon}
-                                        <span className="font-semibold">
+                                        <span className="font-semibold hidden md:block">
                                             {name}
                                         </span>
                                     </div>
@@ -54,9 +56,12 @@ export default function Navbar() {
                 </div>
 
                 <Link href="/preview">
-                    <button className="border border-primary rounded-lg text-primary hover:bg-primary-20 px-[27px] py-[11px]">
-                        <span className="font-semibold">
+                    <button className="secondary_btn md:px-[27px] md:py-[11px] px-4 py-3">
+                        <span className="font-semibold hidden md:block">
                             Preview
+                        </span>
+                        <span className="md:hidden">
+                            <AiOutlineEye />
                         </span>
                     </button>
                 </Link>

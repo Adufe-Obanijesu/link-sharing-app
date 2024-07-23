@@ -20,6 +20,7 @@ const config: Config = {
           50: "#D9D9D9",
           20: "#FAFAFA",
         },
+        lightgrey: "rgba(238, 238, 238, 1)",
         dark: "#333333",
         danger: "#FF3939",
       },
