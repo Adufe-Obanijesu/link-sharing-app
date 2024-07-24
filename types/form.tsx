@@ -16,6 +16,20 @@ interface InputType {
   };
 }
 
+interface InputType2 {
+  label: string;
+  placeholder: string;
+  icon?: ReactNode;
+  name: "link";
+  value: Record<string, string>;
+  setValue: Dispatch<React.SetStateAction<Record<string, string>>>;
+  type?: string;
+  error?: {
+    status: boolean;
+    link: string;
+  };
+}
+
 interface GridInputType {
   label: string;
   placeholder: string;
@@ -44,4 +58,4 @@ type HandleFormType = (
   setData: Dispatch<React.SetStateAction<Record<string, string>>>
 ) => void;
 
-export type { InputType, FormData, InputEvent, HandleFormType, GridInputType };
+export type { InputType, InputType2, FormData, InputEvent, HandleFormType, GridInputType };

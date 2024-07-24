@@ -15,6 +15,16 @@ interface PopupContextProperties {
 interface ContextProperties {
   user: any;
   userDetails: any;
+  links: {
+    platform: string;
+    url: string;
+  }[],
+  setLinks: Dispatch<SetStateAction<Links>>
 }
 
-export type { ButtonType, PopupContextProperties, ContextProperties };
+type Links = {
+  platform: string;
+  url: string;
+}[]
+
+export type { ButtonType, PopupContextProperties, ContextProperties, Links };

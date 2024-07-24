@@ -1,6 +1,6 @@
 "use client"
 
-import { ContextProperties } from "@/types/utils";
+import { ContextProperties, Links } from "@/types/utils";
 import { getAuth, onAuthStateChanged } from "@/firebase";
 import { ReactNode, useState, createContext, useEffect, useCallback } from "react";
 import { ToastContainer } from "react-toastify";
@@ -18,6 +18,8 @@ export default function SiteWrapper({ children }: { children: ReactNode}) {
    
     const [ user, setUser ] = useState<any>(null);
     const [ userDetails, setUserDetails ] = useState<any>(null);
+    const [ links, setLinks ] = useState<Links>([]);
+
 
     const getUser = useCallback(async () => {
         try {
@@ -66,6 +68,8 @@ export default function SiteWrapper({ children }: { children: ReactNode}) {
         <Context.Provider value={{
             user,
             userDetails,
+            links,
+            setLinks,
         }}>
             {children}
             <ToastContainer />
