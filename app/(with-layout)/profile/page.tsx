@@ -4,16 +4,96 @@ import Button from "@/components/Button";
 // icons
 import { GridInput } from "@/components/Inputs";
 import { FormData } from "@/types/form";
-import { useState } from "react";
+import { FormEvent, useContext, useEffect, useState } from "react";
 import { IoImageOutline } from "react-icons/io5";
 
-export default function Profile() {
+import { useUpdateDoc, useFetch } from "@/firebase/firestore";
+import { notify } from "@/utils/notification";
+import { Context } from "@/components/SiteWrapper";
 
-    const [ profileData, setProfileData ] = useState<FormData>({
-        first_name: "",
-        last_name: "",
-        email: "",
-    })
+export default function Profile() {
+  const context = useContext(Context);
+  const user = context?.user;
+  const userDetails = context?.userDetails;
+
+  const { updateDocument } = useUpdateDoc();
+
+  const [ loading, setLoading ] = useState(false);
+
+  const [ profileData, setProfileData ] = useState<FormData>({
+      first_name: "",
+      last_name: "",
+      email: "",
+  })
+
+  useEffect(() => {
+    if (userDetails) {
+      setProfileData(userDetails);
+    }
+  }, [userDetails]);
+
+  const disable = !profileData.first_name && !profileData.last_name && !profileData.email;
+
+  const [ validate, setValidate ] = useState({
+    status: true,
+    email: "",
+    first_name: "",
+    last_name: "",
+  })
+
+  const validateProfileData = () => {
+    const { email, first_name, last_name } = profileData;
+
+    const response = {
+      status: true,
+      email: "",
+      first_name: "",
+      last_name: "",
+    }
+  
+    // Check if fields are not empty
+    if (!first_name) response.first_name = "Can't be empty";
+    if (!last_name) response.last_name = "Can't be empty";
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (email && !emailRegex.test(email)) response.email = "Invalid email";
+    
+    if (!first_name || !last_name || (email && !emailRegex.test(email))) response.status = false;
+
+    return response;
+  }
+
+  const updateProfileData = async (e: FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    
+    const validateForm = validateProfileData();
+    setValidate(validateForm)
+    if (!validateForm.status){
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await updateDocument({
+        id: user?.id,
+        data: profileData,
+        fieldPath: "users",
+      })
+
+      if (response.status) {
+        notify("Profile updated");
+      } else {
+        notify("Error updating profile", "error");
+      }
+    } catch(err) {
+      notify("Error updating profile", "error");
+    } finally {
+      setLoading(false);
+    }
+
+  }
 
   return (
     <div className="space-y-8">
@@ -52,37 +132,40 @@ export default function Profile() {
       </div>
 
       <div className="p-4 bg-grey-20 rounded-lg">
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={updateProfileData}>
             <GridInput
             type="text"
             name="first_name"
             label="First name*"
-            placeholder="e.g. John"
+            placeholder={!userDetails ? "Loading data..." : "e.g. John"}
             value={profileData}
             setValue={setProfileData}
+            error={validate}
             />
             <GridInput
             type="text"
             name="last_name"
             label="Last name*"
-            placeholder="e.g. Doe"
+            placeholder={!userDetails ? "Loading data..." : "e.g. Doe"}
             value={profileData}
             setValue={setProfileData}
+            error={validate}
             />
             <GridInput
             type="email"
             name="email"
             label="Email address"
-            placeholder="e.g. alex@email.com"
+            placeholder={!userDetails ? "Loading data..." : "e.g. alex@email.com"}
             value={profileData}
             setValue={setProfileData}
+            error={validate}
             />
 
             <div className="space-y-6 pt-4">
                 <hr className="border-grey-50 mt-2 -mx-4" />
 
                 <div className="flex justify-end">
-                    <Button text="Save" disabled={true} auto />
+                    <Button text="Save" disabled={disable || loading || !userDetails?.id} auto loading={loading} />
                 </div>
             </div>
         </form>

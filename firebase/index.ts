@@ -41,6 +41,7 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   GoogleAuthProvider,
+  deleteUser,
 } from "firebase/auth";
 import {
   getStorage,
@@ -81,4 +82,5 @@ export {
   limit,
   getDocs,
   deleteObject,
+  deleteUser,
 };

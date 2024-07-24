@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
+import SiteWrapper from "@/components/SiteWrapper";
+
 export const metadata: Metadata = {
   title: "Link Sharing App",
   description: "Link sharing made easy",
@@ -14,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="pb-8">
-        {children}
+        <SiteWrapper>
+          {children}
+        </SiteWrapper>
       </body>
     </html>
   );

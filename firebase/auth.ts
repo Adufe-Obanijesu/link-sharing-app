@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
+  deleteUser,
 } from "./index";
 
 const auth = getAuth();
@@ -115,11 +116,36 @@ const useAuth = () => {
     return response;
   };
 
+  const removeUser = async (): Promise<response> => {
+    let response: response = {
+      status: false,
+      message: "",
+    };
+
+    try {
+      if (auth.currentUser) {
+        await deleteUser(auth.currentUser);
+        response = {
+          status: true,
+          message: "User removed",
+        };
+      }
+    } catch (err: any) {
+      response = {
+        status: false,
+        message: err.code,
+      };
+    }
+    
+    return response;
+  };
+
   return {
     signup,
     updateUser,
     login,
     signout,
+    removeUser,
   };
 };
 

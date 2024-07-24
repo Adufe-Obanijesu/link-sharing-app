@@ -4,13 +4,31 @@ interface InputType {
   label: string;
   placeholder: string;
   icon?: ReactNode;
-  name: string;
+  name: ("email" | "password" | "confirm_password");
   value: Record<string, string>;
   setValue: Dispatch<React.SetStateAction<Record<string, string>>>;
   type?: string;
   error?: {
     status: boolean;
-    message: string;
+    email: string;
+    password: string;
+    confirm_password?: string;
+  };
+}
+
+interface GridInputType {
+  label: string;
+  placeholder: string;
+  icon?: ReactNode;
+  name: ("email" | "first_name" | "last_name");
+  value: Record<string, string>;
+  setValue: Dispatch<React.SetStateAction<Record<string, string>>>;
+  type?: string;
+  error?: {
+    status: boolean;
+    email: string;
+    first_name: string;
+    last_name: string;
   };
 }
 
@@ -26,4 +44,4 @@ type HandleFormType = (
   setData: Dispatch<React.SetStateAction<Record<string, string>>>
 ) => void;
 
-export type { InputType, FormData, InputEvent, HandleFormType };
+export type { InputType, FormData, InputEvent, HandleFormType, GridInputType };

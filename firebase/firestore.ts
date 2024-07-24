@@ -93,7 +93,7 @@ type getQueriedDocs = {
     where?: {
       fieldPath: string;
       opStr: any;
-      value: string;
+      value: string | null;
     }[];
   };
 };

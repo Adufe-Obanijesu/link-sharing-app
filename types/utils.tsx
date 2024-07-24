@@ -4,6 +4,7 @@ interface ButtonType {
   text: string;
   disabled?: boolean;
   auto?: boolean;
+  loading?: boolean;
 }
 
 interface PopupContextProperties {
@@ -11,4 +12,9 @@ interface PopupContextProperties {
   setCancelPopup: Dispatch<SetStateAction<number>>;
 }
 
-export type { ButtonType, PopupContextProperties };
+interface ContextProperties {
+  user: any;
+  userDetails: any;
+}
+
+export type { ButtonType, PopupContextProperties, ContextProperties };

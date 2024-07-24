@@ -1,4 +1,4 @@
-import { InputType } from "@/types/form";
+import { GridInputType, InputType } from "@/types/form";
 import { handleForm } from "@/utils/form";
 
 export function Input({
@@ -15,7 +15,7 @@ export function Input({
     <div className="relative">
       <label
         htmlFor={name}
-        className={`block text-sm mb-1 ${error?.status ? "text-danger" : "text-dark"}`}
+        className={`block text-sm mb-1 ${error?.[name] ? "text-danger" : "text-dark"}`}
       >
         {label}
       </label>
@@ -27,7 +27,7 @@ export function Input({
           type={type}
           id={name}
           className={`block w-full pl-10 pr-4 py-3 ${
-            error ? "border-danger" : "border-grey-50"
+            error?.[name] ? "border-danger" : "border-grey-50"
           } border group rounded-md leading-5 bg-transparent placeholder-grey focus:outline-none focus:border-primary focus:shadow-input`}
           placeholder={placeholder}
           name={name}
@@ -35,10 +35,10 @@ export function Input({
           onChange={(e) => handleForm(e, value, setValue)}
         />
 
-        {error?.status && (
-          <label htmlFor={name} className="v-center absolute top-0 right-1 h-full">
-            <span className="text-danger z-10 bg-white pr-3">
-              {error?.message}
+        {error?.[name] && (
+          <label htmlFor={name} className="v-center absolute top-0 right-[.5px] h-full">
+            <span className="text-danger z-10 bg-white py-2 rounded-r-md px-3">
+              {error?.[name]}
             </span>
           </label>
         )}
@@ -55,12 +55,12 @@ export function GridInput({
   setValue,
   error,
   type = "text",
-}: InputType) {
+}: GridInputType) {
   return (
     <div className="grid md:grid-cols-5 gap-0">
       <label
         htmlFor={name}
-        className={`block mb-1 v-center md:col-span-2 ${error?.status ? "text-danger" : "text-dark"}`}
+        className={`block mb-1 v-center md:col-span-2 ${error?.[name] ? "text-danger" : "text-dark"}`}
       >
         {label}
       </label>
@@ -69,7 +69,7 @@ export function GridInput({
           type={type}
           id={name}
           className={`block w-full px-4 py-3 ${
-            error ? "border-danger" : "border-grey-50"
+            error?.[name] ? "border-danger" : "border-grey-50"
           } border group rounded-md leading-5 bg-transparent placeholder-grey focus:outline-none focus:border-primary focus:shadow-input`}
           placeholder={placeholder}
           name={name}
@@ -77,10 +77,10 @@ export function GridInput({
           onChange={(e) => handleForm(e, value, setValue)}
         />
 
-        {error?.status && (
-          <label htmlFor={name} className="v-center absolute top-0 right-1 h-full">
-            <span className="text-danger z-10 bg-white pr-3">
-              {error?.message}
+        {error?.[name] && (
+          <label htmlFor={name} className="v-center absolute top-0 right-[.5px] h-full">
+            <span className="text-danger z-10 bg-white py-2 rounded-r-md px-3">
+              {error?.[name]}
             </span>
           </label>
         )}

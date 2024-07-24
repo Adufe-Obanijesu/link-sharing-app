@@ -6,10 +6,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="pb-8">
-        <Wrapper>{children}</Wrapper>
-      </body>
-    </html>
+    <div>
+      <Wrapper>{children}</Wrapper>
+    </div>
   );
 }
