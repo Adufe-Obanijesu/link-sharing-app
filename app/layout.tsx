@@ -26,7 +26,7 @@ export default function RootLayout({
               <PhoneMockup />
             </div>
 
-            <div className="lg:col-span-3 md:py-10 rounded-lg bg-white space-y-8">
+            <div className="lg:col-span-3 md:py-10 md:px-10 px-6 rounded-lg bg-white space-y-8">
               {children}
             </div>
           </div>

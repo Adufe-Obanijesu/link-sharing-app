@@ -1,4 +1,6 @@
-import React from 'react';
+import { TbBrandGithubFilled } from "react-icons/tb";
+import { FaYoutube, FaLinkedin, FaFacebook } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa6";
 
 const PhoneMockup = () => {
   return (
@@ -21,9 +23,36 @@ const PhoneMockup = () => {
                 </div>
             </div>
             <div className="mt-6 flex flex-col gap-5 px-6">
-                <div className="w-full h-10 rounded-lg bg-lightgrey"></div>
-                <div className="w-full h-10 rounded-lg bg-lightgrey"></div>
-                <div className="w-full h-10 rounded-lg bg-lightgrey"></div>
+                <div className="w-full h-10 rounded-lg px-4 v-center justify-between bg-black text-white">
+                    <div className="v-center gap-2">
+                        <TbBrandGithubFilled className="text-xl" />
+                        <span>
+                            Github
+                        </span>
+                    </div>
+
+                    <FaArrowRight className="2xl" />
+                </div>
+                <div className="w-full h-10 rounded-lg px-4 v-center justify-between bg-danger text-white">
+                    <div className="v-center gap-2">
+                        <FaYoutube className="text-xl" />
+                        <span>
+                            Youtube
+                        </span>
+                    </div>
+
+                    <FaArrowRight className="2xl" />
+                </div>
+                <div className="w-full h-10 rounded-lg px-4 v-center justify-between bg-blue-500 text-white">
+                    <div className="v-center gap-2">
+                        <FaLinkedin className="text-xl" />
+                        <span>
+                            LinkedIn
+                        </span>
+                    </div>
+
+                    <FaArrowRight className="2xl" />
+                </div>
                 <div className="w-full h-10 rounded-lg bg-lightgrey"></div>
                 <div className="w-full h-10 rounded-lg bg-lightgrey"></div>
             </div>
