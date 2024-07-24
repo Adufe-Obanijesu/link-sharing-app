@@ -1,5 +1,5 @@
 import { TbBrandGithubFilled } from "react-icons/tb";
-import { FaYoutube, FaLinkedin, FaFacebook } from "react-icons/fa";
+import { FaYoutube, FaLinkedin } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 
 const PhoneMockup = () => {

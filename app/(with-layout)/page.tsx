@@ -23,7 +23,7 @@ export default function Home() {
         <Links />
 
         <div className="space-y-6 pt-4">
-          <hr className="border-grey-50 mt-2" />
+          <hr className="border-grey-50 mt-2 -mx-4" />
 
           <div className="flex justify-end">
             <Button text="Save" disabled={true} auto />

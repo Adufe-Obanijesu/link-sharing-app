@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, ReactNode, SetStateAction } from "react";
 interface InputType {
   label: string;
   placeholder: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   name: string;
   value: Record<string, string>;
   setValue: Dispatch<React.SetStateAction<Record<string, string>>>;

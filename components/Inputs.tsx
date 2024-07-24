@@ -46,3 +46,45 @@ export function Input({
     </div>
   );
 }
+
+export function GridInput({
+  label,
+  placeholder,
+  name,
+  value,
+  setValue,
+  error,
+  type = "text",
+}: InputType) {
+  return (
+    <div className="grid md:grid-cols-5 gap-0">
+      <label
+        htmlFor={name}
+        className={`block mb-1 v-center md:col-span-2 ${error?.status ? "text-danger" : "text-dark"}`}
+      >
+        {label}
+      </label>
+      <div className="md:col-span-3">
+        <input
+          type={type}
+          id={name}
+          className={`block w-full px-4 py-3 ${
+            error ? "border-danger" : "border-grey-50"
+          } border group rounded-md leading-5 bg-transparent placeholder-grey focus:outline-none focus:border-primary focus:shadow-input`}
+          placeholder={placeholder}
+          name={name}
+          value={value[name]}
+          onChange={(e) => handleForm(e, value, setValue)}
+        />
+
+        {error?.status && (
+          <label htmlFor={name} className="v-center absolute top-0 right-1 h-full">
+            <span className="text-danger z-10 bg-white pr-3">
+              {error?.message}
+            </span>
+          </label>
+        )}
+      </div>
+    </div>
+  );
+}

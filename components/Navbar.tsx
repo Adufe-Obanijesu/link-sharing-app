@@ -18,7 +18,7 @@ const tabs = [
     },
     {
         name: "Profile Details",
-        link: "/profile-details",
+        link: "/profile",
         icon: <FaRegUserCircle />,
     },
 ]
