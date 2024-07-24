@@ -1,5 +1,4 @@
-import Navbar from "@/components/Navbar";
-import PhoneMockup from "@/components/PhoneMockup";
+import Wrapper from "@/components/Wrapper";
 
 export default function RootLayout({
   children,
@@ -9,18 +8,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="pb-8">
-        <Navbar />
-        <main className="md:px-6 px-4">
-          <div className="grid lg:grid-cols-5 gap-4">
-            <div className="lg:col-span-2 hidden lg:flex justify-center bg-white p-10 rounded-lg">
-              <PhoneMockup />
-            </div>
-
-            <div className="lg:col-span-3 md:py-10 md:px-10 px-6 rounded-lg bg-white space-y-8">
-              {children}
-            </div>
-          </div>
-        </main>
+        <Wrapper>{children}</Wrapper>
       </body>
     </html>
   );

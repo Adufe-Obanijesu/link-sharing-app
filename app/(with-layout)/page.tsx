@@ -6,11 +6,10 @@ export default function Home() {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h3>
-          Customize your links
-        </h3>
+        <h3>Customize your links</h3>
         <p>
-          Add/edit/remove links below and then share all your profiles with the world!
+          Add/edit/remove links below and then share all your profiles with the
+          world!
         </p>
       </div>
 
@@ -20,6 +19,7 @@ export default function Home() {
         </button>
 
         {/* <NoLink /> */}
+
         <Links />
 
         <div className="space-y-6 pt-4">
