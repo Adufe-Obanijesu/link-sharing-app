@@ -54,6 +54,11 @@ const Link = ({ index, link, links, setLinks }: LinkProps) => {
     setLinks(newLinks);
   };
 
+  const remove = () => {
+    const newLinks = links.filter((each) => each.id !== link.id);
+    setLinks(newLinks);
+  };
+
   return (
     <div className="bg-grey-20 rounded-lg p-4 space-y-4">
       <div className="justify-between flex text-grey">
@@ -61,7 +66,9 @@ const Link = ({ index, link, links, setLinks }: LinkProps) => {
           <LuEqual />
           <span className="font-semibold">Link #{index + 1}</span>
         </div>
-        <button className="text-grey font-medium">Remove</button>
+        <button className="text-grey font-medium" onClick={remove}>
+          Remove
+        </button>
       </div>
 
       <div className="space-y-4">

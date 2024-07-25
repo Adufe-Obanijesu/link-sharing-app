@@ -131,12 +131,7 @@ export default function Home() {
 
           <div className="flex justify-end">
             <form onSubmit={save}>
-              <Button
-                text="Save"
-                loading={loading}
-                disabled={links.length <= 0}
-                auto
-              />
+              <Button text="Save" loading={loading} disabled={loading} auto />
             </form>
           </div>
         </div>
