@@ -40,11 +40,15 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
           },
         });
 
+        console.log("hbjjbh", response);
+
         if (response.status && response.data) {
           setUserDetails(response.data[0]);
         }
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err);
+    }
   }, [user]);
 
   useEffect(() => {
