@@ -76,7 +76,7 @@ const PhoneMockup = () => {
             ) : (
               <div className="h-32 w-32 bg-lightgrey rounded-full"></div>
             )}
-            {context ? (
+            {context && context?.userDetails.first_name ? (
               <h4 className="text-xl capitalize font-medium">
                 {context?.userDetails.first_name}{" "}
                 {context?.userDetails.last_name}
@@ -84,7 +84,7 @@ const PhoneMockup = () => {
             ) : (
               <div className="h-5 w-2/3 mt-2 bg-lightgrey rounded-lg"></div>
             )}
-            {context ? (
+            {context && context?.userDetails.email ? (
               <p className="font-medium">{context?.userDetails.email}</p>
             ) : (
               <div className="h-5 w-2/3 mt-2 bg-lightgrey rounded-lg"></div>

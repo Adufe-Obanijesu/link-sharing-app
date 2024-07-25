@@ -48,7 +48,7 @@ export default function PreviewContent() {
     } finally {
       setLoading(false);
     }
-  }, [uid]);
+  }, [uid, getQueriedDocs]);
 
   useEffect(() => {
     getDetails();
