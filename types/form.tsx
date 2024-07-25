@@ -20,13 +20,13 @@ interface InputType2 {
   label: string;
   placeholder: string;
   icon?: ReactNode;
-  name: "link";
+  name: "url";
   value: Record<string, string>;
   setValue: Dispatch<React.SetStateAction<Record<string, string>>>;
   type?: string;
   error?: {
     status: boolean;
-    link: string;
+    url: string;
   };
 }
 

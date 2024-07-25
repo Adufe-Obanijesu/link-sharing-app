@@ -4,71 +4,55 @@
 import { BiLink } from "react-icons/bi";
 import { LuEqual } from "react-icons/lu";
 import { RxCaretDown } from "react-icons/rx";
-import { TbBrandGithubFilled } from "react-icons/tb";
-import { FaYoutube, FaLinkedin, FaFacebook } from "react-icons/fa";
-import { SiFrontendmentor } from "react-icons/si";
-import { useContext, useEffect, useState } from "react";
-import { Input, Input2 } from "../Inputs";
-import { FormData } from "@/types/form";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { PopupContext } from "../Wrapper";
-import { Context } from "../SiteWrapper";
+import { LinkProps } from "@/types/components";
+import { platform_icons, platforms } from "../Platforms";
+import { Platform } from "@/types/utils";
 
-export const platforms = [
-  {
-    name: "Github",
-    icon: <TbBrandGithubFilled />,
-  },
-  {
-    name: "Youtube",
-    icon: <FaYoutube />,
-  },
-  {
-    name: "LinkedIn",
-    icon: <FaLinkedin />,
-  },
-  {
-    name: "Facebook",
-    icon: <FaFacebook />,
-  },
-  {
-    name: "Frontend Mentor",
-    icon: <SiFrontendmentor />,
-  },
-];
-
-const Link: ({ name, url, index }: { name: string; url: string, index: number; }) => JSX.Element = ({ name, url, index }) => {
+const Link = ({ index, link, links, setLinks }: LinkProps) => {
   const [showPlatforms, setShowPlatforms] = useState(false);
-  const [data, setData] = useState<FormData>({
-    platform: "",
-    link: "",
-  });
-
-  const platform = platforms.filter(each => each.name === name)[0];
 
   const preventBubble = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
   const contextState = useContext(PopupContext);
-  const context = useContext(Context);
 
   useEffect(() => {
     setShowPlatforms(false);
   }, [contextState?.cancelPopup]);
 
-  const updateLink = (newPlatform: any) => {
-    if (context) {
-      const newLinks = context?.links.map(each => {
-        if (each.platform === name) {
-          return newPlatform;
-        }
-  
-        return each;
-      })
-  
-      context?.setLinks(newLinks);
-    }
-  }
+  const platform = platforms.filter((each) => each === link.name)[0];
+
+  const updateURL = (e: ChangeEvent<HTMLInputElement>) => {
+    const newLinks = links.map((each) => {
+      if (each.id === link.id) {
+        return {
+          ...each,
+          url: e.target.value,
+        };
+      }
+      return each;
+    });
+
+    setLinks(newLinks);
+  };
+
+  const updatePlatfrom = (platform: Platform) => {
+    setShowPlatforms(false);
+    const newLinks = links.map((each) => {
+      if (each.id === link.id) {
+        return {
+          ...each,
+          name: platform,
+        };
+      }
+      return each;
+    });
+
+    setLinks(newLinks);
+  };
 
   return (
     <div className="bg-grey-20 rounded-lg p-4 space-y-4">
@@ -98,10 +82,8 @@ const Link: ({ name, url, index }: { name: string; url: string, index: number; }
                 }}
               >
                 <span className="v-center gap-4">
-                  <span className="text-xl">{platform.icon}</span>
-                  <span className="font-medium">
-                    {platform.name}
-                  </span>
+                  <span className="text-xl">{platform_icons[link.name]}</span>
+                  <span className="font-medium">{link.name}</span>
                 </span>
                 <RxCaretDown
                   className={`text-2xl group-hover:text-primary transition-item ${
@@ -122,24 +104,21 @@ const Link: ({ name, url, index }: { name: string; url: string, index: number; }
               <div className="py-1 px-4" role="none">
                 {platforms.map((each, index) => (
                   <div
-                    key={each.name}
+                    key={each}
                     className={`group bg-white cursor-pointer py-3 ${
-                      platform.name === each.name ? "text-primary" : "text-grey"
+                      platform === each ? "text-primary" : "text-grey"
                     } ${
                       index !== platforms.length - 1 ? "border-b" : "border-0"
                     } border-grey-50`}
                     aria-expanded="true"
-                    onClick={() => {
-                      updateLink(each)
-                      setShowPlatforms(false);
-                    }}
+                    onClick={() => updatePlatfrom(each)}
                   >
                     <div className="v-center gap-4">
                       <span className="group-hover:text-primary transition-item">
-                        <span className="text-xl">{each.icon}</span>
+                        <span className="text-xl">{platform_icons[each]}</span>
                       </span>
                       <span className="font-medium group-hover:text-primary transition-item">
-                        {each.name}
+                        {each}
                       </span>
                     </div>
                   </div>
@@ -148,14 +127,44 @@ const Link: ({ name, url, index }: { name: string; url: string, index: number; }
             </div>
           </div>
         </div>
-        <Input2
-          name="link"
-          icon={<BiLink />}
-          label="Link"
-          placeholder="e.g. https://platform.com/username"
-          setValue={setData}
-          value={data}
-        />
+
+        <div className="relative">
+          <label
+            htmlFor={link.id}
+            className={`block text-sm mb-1 ${
+              link.error ? "text-danger" : "text-dark"
+            }`}
+          >
+            Link
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-grey">
+              <BiLink />
+            </div>
+            <input
+              type="text"
+              id={link.id}
+              className={`block w-full pl-10 pr-4 py-3 ${
+                link.error ? "border-danger" : "border-grey-50"
+              } border group rounded-md leading-5 bg-transparent placeholder-grey focus:outline-none focus:border-primary focus:shadow-input`}
+              placeholder="e.g. https://platform.com/username"
+              name="url"
+              value={link.url}
+              onChange={updateURL}
+            />
+
+            {link.error && (
+              <label
+                htmlFor="url"
+                className="v-center absolute top-0 right-[.5px] h-full"
+              >
+                <span className="text-danger z-10 bg-white py-2 rounded-r-md px-3">
+                  {link.error}
+                </span>
+              </label>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

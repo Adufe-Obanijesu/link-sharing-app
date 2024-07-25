@@ -15,12 +15,12 @@ import { notify } from "@/utils/notification";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
-
   const { signup, removeUser } = useAuth();
   const { addDocument } = useAddDoc();
   const router = useRouter();
 
-  const [ loading, setLoading ] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const [signupData, setSignupData] = useState<FormData>({
     email: "",
@@ -28,14 +28,15 @@ export default function Signup() {
     confirm_password: "",
   });
 
-  const disable = !signupData.email && !signupData.password && !signupData.confirm_password;
+  const disable =
+    !signupData.email && !signupData.password && !signupData.confirm_password;
 
-  const [ validate, setValidate ] = useState({
+  const [validate, setValidate] = useState({
     status: true,
     email: "",
     password: "",
     confirm_password: "",
-  })
+  });
 
   const validateSignupData = () => {
     const { email, password, confirm_password } = signupData;
@@ -45,8 +46,8 @@ export default function Signup() {
       email: "",
       password: "",
       confirm_password: "",
-    }
-  
+    };
+
     // Check if fields are not empty
     if (!email) response.email = "Can't be empty";
     if (!password) response.password = "Can't be empty";
@@ -55,32 +56,41 @@ export default function Signup() {
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) response.email = "Invalid email";
-    
+
     // Check password length
     if (password.length < 8) response.password = "Too short";
-    
-    // Check if passwords match
-    if (password !== confirm_password) response.confirm_password = "Not a match";
 
-    if (!email || !password || !confirm_password || !emailRegex.test(email) || password.length < 8 || password !== confirm_password) response.status = false;
+    // Check if passwords match
+    if (password !== confirm_password)
+      response.confirm_password = "Not a match";
+
+    if (
+      !email ||
+      !password ||
+      !confirm_password ||
+      !emailRegex.test(email) ||
+      password.length < 8 ||
+      password !== confirm_password
+    )
+      response.status = false;
 
     return response;
-  }
-  
+  };
+
   const signupUser = async (e: FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     const validateForm = validateSignupData();
-    setValidate(validateForm)
-    if (!validateForm.status){
+    setValidate(validateForm);
+    if (!validateForm.status) {
       setLoading(false);
       return;
     }
-    
+
     try {
       const { email, password } = signupData;
-      const response = await signup({email, password});
+      const response = await signup({ email, password });
       if (response.status) {
         const response = await addDocument({
           config: {
@@ -91,28 +101,32 @@ export default function Signup() {
             first_name: "",
             last_name: "",
             email: "",
+            profileImage: "",
             links: [],
           },
-        })
+        });
 
         if (response.status) {
           notify("Signed up successfully. Redirecting...");
-          router.push("/")
+          setRedirect(true);
+          router.push("/");
         } else {
           await removeUser();
           notify("Error signing you up!", "error");
         }
-
       } else {
-        notify("Error signing you up!", "error");
+        if (response.message === "auth/email-already-in-use") {
+          notify("User already exist", "error");
+        } else {
+          notify("Error signing you up!", "error");
+        }
       }
-    } catch(err) {
+    } catch (err) {
       notify("Error signing you up!", "error");
     } finally {
       setLoading(false);
     }
-
-  }
+  };
 
   return (
     <main className="md:py-10 py-8 flex md:justify-center">
@@ -125,7 +139,7 @@ export default function Signup() {
           <div className="space-y-2">
             <h3>Create account</h3>
             <p className="text-lg">
-            Let&apos;s get you started sharing your links!
+              Let&apos;s get you started sharing your links!
             </p>
           </div>
 
@@ -166,12 +180,18 @@ export default function Signup() {
                 Password must contain at least 8 characters
               </p>
 
-              <Button text="Create new account" loading={loading} disabled={loading || disable} />
+              <Button
+                text="Create new account"
+                loading={loading}
+                disabled={loading || disable || redirect}
+              />
             </form>
 
             <div className="text-center md:flex gap-2 justify-center">
               <p className="text-grey">Already have an account?</p>
-              <Link href="/login" className="text-primary">Login</Link>
+              <Link href="/login" className="text-primary">
+                Login
+              </Link>
             </div>
           </div>
         </div>

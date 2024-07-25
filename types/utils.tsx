@@ -15,16 +15,33 @@ interface PopupContextProperties {
 interface ContextProperties {
   user: any;
   userDetails: any;
-  links: {
-    platform: string;
-    url: string;
-  }[],
-  setLinks: Dispatch<SetStateAction<Links>>
+  setUserDetails: Dispatch<SetStateAction<any>>
 }
 
-type Links = {
-  platform: string;
+type LinksProperties = {
+  id: string;
+  name: Platform;
   url: string;
-}[]
+  error: string;
+};
 
-export type { ButtonType, PopupContextProperties, ContextProperties, Links };
+type Platform =
+  | "Github"
+  | "Youtube"
+  | "LinkedIn"
+  | "Facebook"
+  | "Frontend Mentor";
+
+interface ValidationResult {
+  isValid: boolean;
+  message?: string;
+}
+
+export type {
+  ButtonType,
+  PopupContextProperties,
+  ContextProperties,
+  LinksProperties,
+  Platform,
+  ValidationResult,
+};
