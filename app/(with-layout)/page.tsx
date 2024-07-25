@@ -22,7 +22,7 @@ export default function Home() {
   const [links, setLinks] = useState<LinksProperties[]>([]);
 
   useEffect(() => {
-    if (!context?.userDetails.links) return;
+    if (!context?.userDetails) return;
     if (context?.userDetails?.links.length > 0) {
       setLinks([...context?.userDetails.links]);
     }
