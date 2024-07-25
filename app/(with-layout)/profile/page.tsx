@@ -154,7 +154,7 @@ export default function Profile() {
 
       // Proceed with the upload
       const response = await upload({
-        name: userDetails.email,
+        name: `users/${userDetails.email}`,
         file,
       });
       const url = response.url;
