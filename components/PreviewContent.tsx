@@ -40,6 +40,8 @@ export default function PreviewContent() {
         },
       });
 
+      console.log(status, data);
+
       if (status) {
         console.log(status);
         setDetails(data?.[0]);
@@ -49,7 +51,7 @@ export default function PreviewContent() {
     } finally {
       setLoading(false);
     }
-  }, [uid, getQueriedDocs]);
+  }, [uid]);
 
   useEffect(() => {
     getDetails();
