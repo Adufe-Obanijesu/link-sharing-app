@@ -5,15 +5,14 @@ import PreviewNavbar from "@/components/PreviewNavbar";
 // icons
 import { FaArrowRight } from "react-icons/fa6";
 import { useSearchParams } from "next/navigation";
-import { useFetch } from "@/firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import { notify } from "@/utils/notification";
 import Loader from "@/components/Loader";
 import Image from "next/image";
 import Link from "next/link";
 import { platform_color, platform_icons } from "@/components/Platforms";
-import { Suspense } from "react";
 import { LinksProperties } from "@/types/utils";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 export default function PreviewContent() {
   const searchParams = useSearchParams();
@@ -21,30 +20,19 @@ export default function PreviewContent() {
   const [loading, setLoading] = useState(true);
   const [details, setDetails] = useState<any>();
 
-  const { getQueriedDocs } = useFetch();
+  const db = getFirestore();
 
   const getDetails = useCallback(async () => {
     if (!uid) return;
     setLoading(true);
     try {
-      const { data, status } = await getQueriedDocs({
-        config: {
-          collectionName: "users",
-          where: [
-            {
-              fieldPath: "id",
-              opStr: "==",
-              value: uid,
-            },
-          ],
-        },
-      });
+      const docRef = doc(db, "users", uid);
+      const docSnap = await getDoc(docRef);
 
-      console.log(status, data);
-
-      if (status) {
-        console.log(status);
-        setDetails(data?.[0]);
+      if (docSnap.exists()) {
+        setDetails(docSnap.data());
+      } else {
+        console.log("No such document!");
       }
     } catch (err) {
       notify("Unable to get user details! Please try again.", "error");
