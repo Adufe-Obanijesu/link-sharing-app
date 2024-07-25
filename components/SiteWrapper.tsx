@@ -24,6 +24,7 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
 
   const getUser = useCallback(async () => {
     try {
+      console.log("hkjhkjnk", user, !user);
       if (user) {
         console.log("user available");
         const response = await getQueriedDocs({
