@@ -23,9 +23,9 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
   const [userDetails, setUserDetails] = useState<any>(null);
 
   const getUser = useCallback(async () => {
-    if (!user) return;
     try {
       if (user) {
+        console.log("user available");
         const response = await getQueriedDocs({
           config: {
             collectionName: "users",
@@ -60,7 +60,9 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     getUser();
-  }, [getUser, user]);
+  }, [getUser]);
+
+  console.log(user, userDetails, "sda");
 
   return (
     <Context.Provider
