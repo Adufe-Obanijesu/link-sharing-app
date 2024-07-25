@@ -23,6 +23,7 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
   const [userDetails, setUserDetails] = useState<any>(null);
 
   const getUser = useCallback(async () => {
+    if (!user) return;
     try {
       if (user) {
         const response = await getQueriedDocs({
@@ -59,7 +60,7 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     getUser();
-  }, [getUser]);
+  }, [getUser, user]);
 
   return (
     <Context.Provider
