@@ -12,7 +12,6 @@ import {
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useFetch } from "@/firebase/firestore";
-
 export const Context = createContext<ContextProperties | null>(null);
 
 const auth = getAuth();

@@ -1,16 +1,36 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useState, createContext } from "react";
 
 import Navbar from "./Navbar";
 import PhoneMockup from "./PhoneMockup";
 import { PopupContextProperties } from "@/types/utils";
+import { useRouter } from "next/navigation";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export const PopupContext = createContext<PopupContextProperties | null>(null);
 
 export default function Wrapper({ children }: { children: ReactNode }) {
   const [cancelPopup, setCancelPopup] = useState(0);
+  const auth = getAuth();
+  const router = useRouter();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        router.push("/login");
+        return;
+      }
+      setLoading(false);
+    });
+    return () => {
+      unsub();
+    };
+  }, [router, auth]);
 
   return (
     <PopupContext.Provider
