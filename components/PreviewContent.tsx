@@ -41,6 +41,7 @@ export default function PreviewContent() {
       });
 
       if (status) {
+        console.log(status);
         setDetails(data?.[0]);
       }
     } catch (err) {
