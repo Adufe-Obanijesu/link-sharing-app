@@ -66,11 +66,9 @@ const PhoneMockup = () => {
         <div className="mt-20 h-center w-full">
           <div className="flex flex-col w-full items-center gap-2">
             {context && context?.userDetails.profileImage ? (
-              <Image
+              <img
                 src={context.userDetails.profileImage}
                 alt={context.userDetails.email}
-                width={1000}
-                height={1000}
                 className="h-32 w-32 rounded-full"
               />
             ) : (
