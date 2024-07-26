@@ -11,6 +11,7 @@ import {
   useEffect,
   useState,
   useRef,
+  MouseEvent,
 } from "react";
 import { IoImageOutline } from "react-icons/io5";
 
@@ -20,6 +21,7 @@ import { Context } from "@/components/SiteWrapper";
 import { useStorage } from "@/firebase/storage";
 import Loader from "@/components/Loader";
 import NextImage from "next/image";
+import { MdDelete } from "react-icons/md";
 
 export default function Profile() {
   const context = useContext(Context);
@@ -27,6 +29,7 @@ export default function Profile() {
 
   const { updateDocument } = useUpdateDoc();
   const { upload } = useStorage();
+  const { deleteFile } = useStorage();
 
   const [loading, setLoading] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
@@ -105,6 +108,10 @@ export default function Profile() {
 
       if (response.status) {
         notify("Profile updated");
+        context?.setUserDetails({
+          ...userDetails,
+          ...profileData,
+        });
       } else {
         notify("Error updating profile", "error");
         console.log(response);
@@ -116,7 +123,7 @@ export default function Profile() {
       setLoading(false);
     }
   };
-  console.log(userDetails);
+
   const loadImage = (file: File): Promise<HTMLImageElement> => {
     return new Promise((resolve, reject) => {
       const image = new Image();
@@ -189,6 +196,34 @@ export default function Profile() {
     }
   };
 
+  const deleteImage = async (e: MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    const isSure = confirm("Are you sure?");
+    if (!isSure) return;
+
+    setUploadLoading(true);
+    try {
+      await deleteFile(`users/${userDetails?.register_email}`);
+      await updateDocument({
+        id: userDetails?.id,
+        fieldPath: "users",
+        data: {
+          profileImage: "",
+        },
+      });
+
+      notify("Profile picture deleted!");
+      context?.setUserDetails({
+        ...userDetails,
+        profileImage: "",
+      });
+    } catch (err) {
+      notify("Error deleting profile picture", "error");
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+
   return (
     <div className="space-y-8">
       <div className="space-y-2">
@@ -203,17 +238,30 @@ export default function Profile() {
           </div>
 
           <label
-            htmlFor="image"
+            htmlFor={
+              context?.userDetails?.profileImage || uploadLoading ? "" : "image"
+            }
             className="relative rounded-md bg-primary-20 text-primary text-center space-y-2 cursor-pointer w-3/4 md:w-full"
           >
             {userDetails?.profileImage ? (
-              <NextImage
-                src={userDetails.profileImage}
-                alt={userDetails.first_name}
-                width={1000}
-                height={1000}
-                className="w-full h-full object-cover object-top"
-              />
+              <>
+                <NextImage
+                  src={userDetails.profileImage}
+                  alt={userDetails.first_name}
+                  width={1000}
+                  height={1000}
+                  className="w-full h-full object-cover object-top"
+                />
+
+                {!uploadLoading && (
+                  <div
+                    className="absolute z-10 -top-2 left-0 h-full w-full rounded-md hv-center bg-black/70"
+                    onClick={deleteImage}
+                  >
+                    <MdDelete className="text-white text-2xl" />
+                  </div>
+                )}
+              </>
             ) : (
               <div className="py-12">
                 <IoImageOutline className="text-5xl inline mx-auto" />
