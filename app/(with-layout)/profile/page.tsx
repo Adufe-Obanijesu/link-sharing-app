@@ -246,11 +246,9 @@ export default function Profile() {
           >
             {userDetails?.profileImage ? (
               <>
-                <NextImage
+                <img
                   src={userDetails.profileImage}
                   alt={userDetails.first_name}
-                  width={1000}
-                  height={1000}
                   className="w-full h-full object-cover object-top"
                 />
 
