@@ -24,9 +24,7 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
 
   const getUser = useCallback(async () => {
     try {
-      console.log("hkjhkjnk", user, !user);
       if (user) {
-        console.log("user available");
         const response = await getQueriedDocs({
           config: {
             collectionName: "users",
@@ -39,8 +37,6 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
             ],
           },
         });
-
-        console.log("hbjjbh", response);
 
         if (response.status && response.data) {
           setUserDetails(response.data[0]);
@@ -66,8 +62,6 @@ export default function SiteWrapper({ children }: { children: ReactNode }) {
   useEffect(() => {
     getUser();
   }, [getUser]);
-
-  console.log(user, userDetails, "sda");
 
   return (
     <Context.Provider
