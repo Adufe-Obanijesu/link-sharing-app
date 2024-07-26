@@ -180,6 +180,7 @@ export default function Profile() {
             profileImage: url,
           });
           notify("Profile updated!");
+          fileInput.value = "";
         } else {
           notify(response.message, "error");
           fileInput.value = "";
