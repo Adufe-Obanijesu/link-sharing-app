@@ -63,11 +63,9 @@ export default function PreviewContent() {
                 <div className="h-center w-full">
                   <div className="flex flex-col w-full items-center gap-2">
                     {details.profileImage ? (
-                      <Image
+                      <img
                         src={details?.profileImage}
                         alt={details?.email}
-                        width={1000}
-                        height={1000}
                         className="h-32 w-32 rounded-full"
                       />
                     ) : (
