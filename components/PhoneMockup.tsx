@@ -43,7 +43,7 @@ const PhoneMockup = () => {
 
   if (!context?.userDetails || loading) {
     return (
-      <div className="h-center mt-12">
+      <div className="hv-center">
         <Loader large />
       </div>
     );
